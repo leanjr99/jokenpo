@@ -9,12 +9,59 @@ class Jogo extends StatefulWidget {
 class _JogoState extends State<Jogo> {
 
   var _imagemApp = AssetImage("images/padrao.png");
+  var _mensagem = "";
+
   void _opcaoSelecionada(String escolhaUsuario){
 
    var opcoes = ["pedra", "papel", "tesoura"];
    var numero = Random().nextInt(3);
    var escolhaApp = opcoes[numero];
-  }
+
+   //Exibicao da imagem
+    switch( escolhaApp){
+      case "pedra":
+        setState(() {
+          this._imagemApp = AssetImage("images/pedra.png");
+        });
+        break;
+      case "papel":
+        setState(() {
+          this._imagemApp = AssetImage("images/papel.png");
+        });
+        break;
+      case "tesoura":
+        setState(() {
+          this._imagemApp = AssetImage("images/tesoura.png");
+        });
+        break;
+    }
+
+    //validar vencedor
+   //usuario
+   if(
+   (escolhaUsuario == "pedra" && escolhaApp =="tesoura")||
+   (escolhaUsuario == "tesoura" && escolhaApp =="papel")||
+   (escolhaUsuario == "papel" && escolhaApp =="pedra")
+   ) {
+     setState(() {
+       this._mensagem = "Você ganhou!";
+     });
+//app ganhador
+   }else if(
+   (escolhaApp == "pedra" && escolhaUsuario =="tesoura")||
+       (escolhaApp == "tesoura" && escolhaUsuario =="papel")||
+       (escolhaApp == "papel" && escolhaUsuario =="pedra")
+   ){
+     setState(() {
+       this._mensagem = "Você perdeu!";
+     });
+   }else{
+     setState(() {
+       this._mensagem = "Empate!";
+     });
+   }
+   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +92,7 @@ class _JogoState extends State<Jogo> {
               bottom: 16,
             ),
             child: Text(
-              "Escolha uma opção abaixo",
+              this._mensagem,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize :20,

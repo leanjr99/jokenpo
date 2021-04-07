@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Jogo extends StatefulWidget {
   @override
@@ -6,6 +7,14 @@ class Jogo extends StatefulWidget {
 }
 
 class _JogoState extends State<Jogo> {
+
+  var _imagemApp = AssetImage("images/padrao.png");
+  void _opcaoSelecionada(String escolhaUsuario){
+
+   var opcoes = ["pedra", "papel", "tesoura"];
+   var numero = Random().nextInt(3);
+   var escolhaApp = opcoes[numero];
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +38,7 @@ class _JogoState extends State<Jogo> {
               ),
             ),
           ),
-          Image.asset("images/padrao.png"),
+          Image(image: this._imagemApp,),
           Padding(
             padding: EdgeInsets.only(
               top: 32,
@@ -47,9 +56,20 @@ class _JogoState extends State<Jogo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Image.asset('images/pedra.png',height: 100,),
-              Image.asset('images/papel.png',height: 100,),
-              Image.asset('images/tesoura.png',height: 100,),
+              GestureDetector(
+                onTap: () => _opcaoSelecionada("pedra"),
+                child: Image.asset('images/pedra.png', height: 100,),
+              ),
+              GestureDetector(
+                onTap: () => _opcaoSelecionada("papel"),
+                child: Image.asset('images/papel.png', height: 100,),
+              ),
+              GestureDetector(
+                onTap: () => _opcaoSelecionada("tesoura"),
+                child: Image.asset('images/tesoura.png', height: 100,),
+              ),
+
+
             ],
           )
         ],
